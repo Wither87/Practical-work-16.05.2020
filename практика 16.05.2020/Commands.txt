@@ -1,6 +1,9 @@
-var
-mov
-add
-sub
-div
-mul
+var a
+mov a, 10
+div a, 2
+var b
+add b, 20
+sub b, 10
+var num
+add num, 15
+mul num, 3

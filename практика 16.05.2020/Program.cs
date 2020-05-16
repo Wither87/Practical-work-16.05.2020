@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace практика_16._05._2020
+﻿namespace PracticalWork
 {
     class Program
     {
         static void Main(string[] args)
         {
+            string path = @"..\..\Commands.txt";
             var calcul = new Calculator();
+            calcul.PerformCalculate(path);
             calcul.PerformCalculate();
         }
     }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "практика 16.05.2020", "практика 16.05.2020\практика 16.05.2020.csproj", "{99DBEC2E-9F67-4ED3-AF5F-03A20121CDC7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practical-work", "практика 16.05.2020\Practical-work.csproj", "{99DBEC2E-9F67-4ED3-AF5F-03A20121CDC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

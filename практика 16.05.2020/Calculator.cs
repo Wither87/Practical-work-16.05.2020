@@ -1,37 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-namespace практика_16._05._2020
+namespace PracticalWork
 {
-    class ReadyCommand {
+    class CommandParts {
         public string Command { get; set; }
         public string First { get; set; }
         public double Second { get; set; }
     }
 
     class Calculator {
+        // выполнить команды, вписанные вручную
         public void PerformCalculate() {
             Dictionary<string, double> varibleList = new Dictionary<string, double>();    // словарь с переменными
+
             while (true) {
                 Console.WriteLine("\nВведите команду:");
                 string inputCommand = Console.ReadLine();    // ввод команды с консоли
                 if (inputCommand == "") break;
 
-                var parsCommand = ParsCommand(inputCommand);  // разделить команду на части
+                var parsedCommand = ParsCommand(inputCommand);  // разделить команду на части
 
-                bool checkLenghtCommand = CheckLenghtCommand(parsCommand); // проверка длины команды
-                ReadyCommand readyCommand = CreateCommandParts(checkLenghtCommand, parsCommand); // создание класса Команда
+                bool checkLenghtCommand = CheckLenghtCommand(parsedCommand); // проверка длины команды
+                CommandParts readyCommand = CreateCommandParts(checkLenghtCommand, parsedCommand); // создание класса c частями команды
                 PerformCommand(readyCommand, varibleList);   // выполнить команду  
             }
+
             Console.WriteLine("------------------------");
             Console.WriteLine("Список всех переменных:");
             foreach(var item in varibleList) {
                 Console.WriteLine(item);
             }
         }
+
+        // выполнять команды, записанные в файле
+        public void PerformCalculate(string path) {
+            Dictionary<string, double> varibleList = new Dictionary<string, double>();    // словарь с переменными
+
+            string[] commands = ReadFile(path);
+            foreach (var item in commands) {
+                Console.WriteLine(item);
+                string inputCommand = item;
+                var parsedCommand = ParsCommand(inputCommand);  // разделить команду на части
+
+                bool checkLenghtCommand = CheckLenghtCommand(parsedCommand); // проверка длины команды
+                CommandParts readyCommand = CreateCommandParts(checkLenghtCommand, parsedCommand); // создание класса c частями команды
+                PerformCommand(readyCommand, varibleList);   // выполнить команду  
+            }
+
+            Console.WriteLine("------------------------");
+            Console.WriteLine("Список всех переменных:");
+            foreach (var item in varibleList) {
+                Console.WriteLine(item);
+            }
+        }
+        // считать команды из файла
+        string[] ReadFile(string path) {
+            string[] readedFile = File.ReadAllLines(path);
+            return readedFile;
+        }
+
         // Разделить введённую команду на части
         public string[] ParsCommand(string inputCommand) {
             string[] parsedCommand = inputCommand.Split(new char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -46,16 +75,16 @@ namespace практика_16._05._2020
                 return false;
         }
 
-        // Создать класс Команда
-        ReadyCommand CreateCommandParts(bool commLenght, string[] command) {
+        // Создать класс с частями команды
+        CommandParts CreateCommandParts(bool commLenght, string[] command) {
             if (commLenght)
-                return new ReadyCommand {
+                return new CommandParts {
                     Command = command[0],
                     First = command[1],
                     Second = double.Parse(command[2])
                 };
             else
-                return new ReadyCommand {
+                return new CommandParts {
                     Command = command[0],
                     First = command[1],
                     Second = 0
@@ -63,7 +92,7 @@ namespace практика_16._05._2020
         }
         
         // Выполнение команды
-        public void PerformCommand(ReadyCommand command, Dictionary<string, double> dict) {
+        public void PerformCommand(CommandParts command, Dictionary<string, double> dict) {
             switch (command.Command) {
                 case "var": Var(dict, command.First); break;
                 case "mov": Mov(dict, command.First, command.Second); break;
